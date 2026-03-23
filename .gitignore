@@ -1,0 +1,7 @@
+.vs/
+EndfieldTaskOverlay/*
+!EndfieldTaskOverlay/icon.ico
+!EndfieldTaskOverlay/MainWindow.xaml
+!EndfieldTaskOverlay/MainWindow.xaml.cs
+!EndfieldTaskOverlay/SettingsWindow.xaml
+!EndfieldTaskOverlay/SettingsWindow.xaml.cs
