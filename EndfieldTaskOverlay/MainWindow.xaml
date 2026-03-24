@@ -32,7 +32,7 @@
                         Orientation="Horizontal"
                         HorizontalAlignment="Right">
                 <Button x:Name="StartTimerButton" Width="26" Height="22" Margin="2" Content="⏱" ToolTip="开始计时" Click="StartTimerButton_Click" />
-                <Button Width="26" Height="22" Margin="2" Content="✏" ToolTip="编辑任务" Click="EditTaskButton_Click" />
+                <Button Width="26" Height="22" Margin="2" Content="✏" ToolTip="编辑/载入任务" Click="EditTaskButton_Click" />
                 <Button Width="26" Height="22" Margin="2" Content="⚙" ToolTip="设置" Click="SettingsButton_Click" />
                 <Button Width="26" Height="22" Margin="2" Content="?" ToolTip="帮助" Click="HelpButton_Click" />
                 <Button Width="26" Height="22" Margin="2" Content="✕" ToolTip="关闭" Click="CloseButton_Click" />

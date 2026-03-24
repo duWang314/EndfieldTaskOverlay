@@ -142,6 +142,11 @@ namespace EndfieldTaskOverlay
                 _tasks.Add(task);
             }
 
+            if (_tasks.Count != 0 && !_hasStartedTiming)
+            {
+                StartTimerButton.IsEnabled = true;
+            }
+
             _currentTaskIndex = 0;
         }
 
@@ -191,6 +196,7 @@ namespace EndfieldTaskOverlay
 
             if (_hasStartedTiming)
             {
+                StartTimerButton.Content = "⏳";
                 var minutes = _elapsedSeconds / 60;
                 var seconds = _elapsedSeconds % 60;
                 TaskTextBlock.Text = $"共花费 {minutes} min {seconds} s\n比上次更快了吗？";
@@ -308,6 +314,7 @@ namespace EndfieldTaskOverlay
             _elapsedSeconds = 0;
             _taskDurationTimer.Start();
             StartTimerButton.IsEnabled = false;
+            StartTimerButton.Content = "⌛";
         }
 
         private void EditTaskButton_Click(object sender, RoutedEventArgs e)
@@ -315,9 +322,6 @@ namespace EndfieldTaskOverlay
             if (!File.Exists(_todoPath))
             {
                 File.WriteAllText(_todoPath, "这是一份 TODO 样例\n您可以由此编写更适配自己的 TODO\n欢迎回家，博士！\n帝江号——收取基建产物 [I]\n帝江号——送礼物，造装备，拿日活跃奖励\n据点管理——换调度券 [Y]\n物资调度——稳定需求和弹性需求物资 [Y]\n好友——进行情报交流和生产助力\n活动——打活动（如果有）[F7]\n行动手册——清理智 [F8]\n仓储节点——送货 [Y]\n信用交易所——清信用 [F5]\n环境监测终端——拍照任务（如果有）[Y]\n采集提示——收集地图中的菌、石、叶（如果有） [M]\n亲一口洛茜\n帝江号——回到干员联络台处\n\n--- 可选内容（不全，您可以自行添加） ---\n\n此处的内容将不会出现在小窗中，如果您希望每日处理这类事务，请手动将其添加到上面\n\n武陵城——生态种植区收菜\n源石研究园——生态种植区收菜\n能量淤积点——刷材料或经验\n武陵——收集驼兽粪便\n武陵——打箱子");
-                LoadTasks();
-                UpdateTaskDisplay();
-                StartTimerButton.IsEnabled = true;
             }
 
             Process.Start(new ProcessStartInfo
@@ -326,6 +330,9 @@ namespace EndfieldTaskOverlay
                 Arguments = $"\"{_todoPath}\"",
                 UseShellExecute = true
             });
+
+            LoadTasks();
+            UpdateTaskDisplay();
         }
 
         private void HelpButton_Click(object sender, RoutedEventArgs e)
