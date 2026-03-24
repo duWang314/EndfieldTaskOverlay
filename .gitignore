@@ -5,3 +5,4 @@ EndfieldTaskOverlay/*
 !EndfieldTaskOverlay/MainWindow.xaml.cs
 !EndfieldTaskOverlay/SettingsWindow.xaml
 !EndfieldTaskOverlay/SettingsWindow.xaml.cs
+!EndfieldTaskOverlay/EndfieldTaskOverlay.csproj
