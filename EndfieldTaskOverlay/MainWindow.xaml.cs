@@ -33,6 +33,8 @@ namespace EndfieldTaskOverlay
         {
             InitializeComponent();
 
+            LoadCustomCursor();
+
             _taskDurationTimer.Tick += TaskDurationTimer_Tick;
             _shutdownTimer.Tick += ShutdownTimer_Tick;
 
@@ -40,6 +42,25 @@ namespace EndfieldTaskOverlay
             TryLaunchGame();
             LoadTasks();
             UpdateTaskDisplay();
+        }
+
+        private void LoadCustomCursor()
+        {
+            try
+            {
+                // 获取嵌入在程序内部的光标资源流
+                var streamInfo = Application.GetResourceStream(new Uri("cursor.cur", UriKind.Relative));
+                if (streamInfo != null)
+                {
+                    // 将窗口的光标设置为我们自定义的光标
+                    this.Cursor = new Cursor(streamInfo.Stream);
+                }
+            }
+            catch (Exception)
+            {
+                // 保底机制：如果光标文件损坏或找不到，就静默失败，使用系统默认的箭头光标
+                this.Cursor = Cursors.Arrow;
+            }
         }
 
         private void LoadSettings()

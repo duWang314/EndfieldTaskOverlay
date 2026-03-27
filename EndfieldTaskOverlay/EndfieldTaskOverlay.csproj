@@ -10,6 +10,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="cursor.cur" />
     <None Remove="icon.ico" />
   </ItemGroup>
 
@@ -18,6 +19,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Resource Include="cursor.cur" />
     <Resource Include="icon.ico" />
   </ItemGroup>
 

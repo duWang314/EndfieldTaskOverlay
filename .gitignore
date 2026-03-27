@@ -6,3 +6,5 @@ EndfieldTaskOverlay/*
 !EndfieldTaskOverlay/SettingsWindow.xaml
 !EndfieldTaskOverlay/SettingsWindow.xaml.cs
 !EndfieldTaskOverlay/EndfieldTaskOverlay.csproj
+!EndfieldTaskOverlay/cursor.cur
+TODO.md
