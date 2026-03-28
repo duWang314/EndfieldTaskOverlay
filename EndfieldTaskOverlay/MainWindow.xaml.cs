@@ -99,6 +99,11 @@ namespace EndfieldTaskOverlay
                 }
 
                 Topmost = _settings.auto_pin;
+
+                if (_settings.window_opacity > 0)
+                {
+                    _MainWindow.Opacity = _settings.window_opacity;
+                }
             }
             catch
             {
@@ -377,7 +382,9 @@ namespace EndfieldTaskOverlay
                 Owner = this
             };
 
+            _MainWindow.Opacity = 0;
             settingsWindow.ShowDialog();
+            _MainWindow.Opacity = _settings.window_opacity;
         }
 
         public void ApplySettings(OverlaySettings settings)
@@ -403,6 +410,11 @@ namespace EndfieldTaskOverlay
             if (_settings.window_height > 0)
             {
                 Height = Math.Max(MinHeight, _settings.window_height);
+            }
+
+            if (_settings.window_opacity > 0)
+            {
+                Opacity = _settings.window_opacity;
             }
         }
 
@@ -450,5 +462,8 @@ namespace EndfieldTaskOverlay
 
         [JsonPropertyName("window_height")]
         public double window_height { get; set; } = 200;
+
+        [JsonPropertyName("window_opacity")]
+        public double window_opacity { get; set; } = 1;
     }
 }

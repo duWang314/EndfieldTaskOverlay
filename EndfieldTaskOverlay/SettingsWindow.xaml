@@ -6,7 +6,7 @@
         mc:Ignorable="d"
         Width="325"
         Height="200"
-        MinWidth="217"
+        MinWidth="216.5"
         MinHeight="133"
         WindowStyle="None"
         AllowsTransparency="True"

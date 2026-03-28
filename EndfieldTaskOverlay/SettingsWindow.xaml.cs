@@ -27,6 +27,7 @@ namespace EndfieldTaskOverlay
             Height = _mainWindow.Height;
             Left = _mainWindow.Left;
             Top = _mainWindow.Top;
+            Opacity = _mainWindow.Opacity;
 
             LoadSettings();
             FillForm();
@@ -119,6 +120,8 @@ namespace EndfieldTaskOverlay
 
         private void ConfirmButton_Click(object sender, RoutedEventArgs e)
         {
+            LoadSettings();
+
             var updated = new OverlaySettings
             {
                 auto_pin = AutoPinCheckBox.IsChecked == true,
@@ -127,7 +130,8 @@ namespace EndfieldTaskOverlay
                 window_width = _settings.window_width,
                 window_height = _settings.window_height,
                 location_x = ParseCoordinate(LocationXTextBox.Text, _mainWindow.Left),
-                location_y = ParseCoordinate(LocationYTextBox.Text, _mainWindow.Top)
+                location_y = ParseCoordinate(LocationYTextBox.Text, _mainWindow.Top),
+                window_opacity = _settings.window_opacity
             };
 
             _settings = updated;
