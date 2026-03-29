@@ -384,9 +384,7 @@ namespace EndfieldTaskOverlay
                 Owner = this
             };
 
-            _MainWindow.Opacity = 0;
             settingsWindow.ShowDialog();
-            _MainWindow.Opacity = _settings.window_opacity;
         }
 
         public void ApplySettings(OverlaySettings settings)
@@ -441,8 +439,15 @@ namespace EndfieldTaskOverlay
             SaveSettings();
         }
 
-        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        private void Window_MouseEnter(object sender, MouseEventArgs e)
         {
+            _MainWindow.Opacity = 1;
+        }
+
+        private void Window_MouseLeave(object sender, MouseEventArgs e)
+        {
+            _MainWindow.Opacity = _settings.window_opacity;
+
             // 【细节防错】如果当前设置子窗口处于打开状态，千万不要切焦点，否则设置窗口会失去响应或被盖住
             if (Application.Current.Windows.OfType<SettingsWindow>().Any())
             {

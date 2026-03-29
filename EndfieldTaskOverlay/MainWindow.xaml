@@ -17,7 +17,8 @@
         Topmost="True"
         Title="Endfield Task Overlay"
         MouseLeftButtonDown="Window_MouseLeftButtonDown"
-        MouseLeave="Window_MouseLeave">
+        MouseLeave="Window_MouseLeave"
+        MouseEnter="Window_MouseEnter">
     <Border Background="#FFFDFDFD"
             BorderBrush="#FFD8D8D8"
             BorderThickness="1"
