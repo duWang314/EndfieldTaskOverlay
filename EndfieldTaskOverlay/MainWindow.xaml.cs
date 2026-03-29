@@ -1,5 +1,7 @@
 ﻿using System.Diagnostics;
 using System.IO;
+using System.Linq;
+using System.Runtime.InteropServices;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Windows;
@@ -438,6 +440,37 @@ namespace EndfieldTaskOverlay
             _settings.window_height = Height;
             SaveSettings();
         }
+
+        private void Window_MouseLeave(object sender, System.Windows.Input.MouseEventArgs e)
+        {
+            // 【细节防错】如果当前设置子窗口处于打开状态，千万不要切焦点，否则设置窗口会失去响应或被盖住
+            if (Application.Current.Windows.OfType<SettingsWindow>().Any())
+            {
+                return;
+            }
+
+            // 假设你的设置数据存放在名为 _settings 的实例中（请根据你的实际变量名修改）
+            string gamePath = _settings.game_path;
+
+            if (string.IsNullOrWhiteSpace(gamePath))
+                return;
+
+            // 从 "C:/.../Endfield.exe" 中提取出 "Endfield" 作为进程名
+            string processName = Path.GetFileNameWithoutExtension(gamePath);
+
+            // 在系统中查找这个进程
+            Process[] processes = Process.GetProcessesByName(processName);
+
+            if (processes.Length > 0)
+            {
+                // 找到游戏了！将 Windows 的活动焦点强行设置给游戏的主窗口
+                SetForegroundWindow(processes[0].MainWindowHandle);
+            }
+        }
+
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 
     public class OverlaySettings
