@@ -6,7 +6,7 @@
 
 ## 📌 简介
 
-<img alt="image" src="https://github.com/user-attachments/assets/d098749f-82a4-4ca1-bec2-684e293405d8" />
+![intro](.\image\intro.png)
 
 “终常小窗”是一款专为《明日方舟：终末地》玩家打造的轻量级、免安装桌面日常辅助工具。
 它能以极简的无边框悬浮窗形式贴合在游戏画面上，帮助你逐条追踪日常任务进度。告别繁琐的记忆和遗漏，让你以最高效的流程清理日常，节约宝贵的时间。
@@ -15,25 +15,25 @@
 
 * **定制鼠标与窗口半透明：** 窗口采用终末地样式的定制鼠标，增加沉浸感；且默认鼠标不移入时保持一定的透明度，透明度可在配置文件中自行调整。
 
-  ![cursor and transparency](C:\Users\Administrator\Desktop\cursor and transparency.gif)
+  ![cursor and transparency](.\image\cursor and transparency.gif)
 * **极简悬浮，随心拖拽：** 无边框设计，支持在任意位置拖动窗口，支持在右下角调整窗口大小。绝不遮挡游戏关键视野。窗口的大小和位置将在每次 拖拽 / 缩放 后自动保存。
 
-  ![drag](C:\Users\Administrator\Desktop\drag.gif)
+  ![drag](.\image\drag.gif)
 
-  ![zoom](C:\Users\Administrator\Desktop\zoom.gif)
+  ![zoom](.\image\zoom.gif)
 * **自动聚焦游戏：** 鼠标指针移出后自动聚焦到游戏（锁定进程：Endfield.exe），无需再在游戏中点击，增加沉浸感。
 
-  ![auto focus](C:\Users\Administrator\Desktop\auto focus.gif)
+  ![auto focus](.\image\auto focus.gif)
 * **灵活定制任务：** 纯文本 `TODO.txt` 驱动，人人皆可轻松编辑，定制专属的日常清本路线。
 * **一键启动游戏：** 绑定游戏路径，并在设置中勾选“自动启动游戏”后，打开小窗即刻自动拉起游戏，快人一步。
 
-<img width="326" height="200" alt="image" src="https://github.com/user-attachments/assets/5e8e752a-cd40-498b-8312-4fcaf8c47a01" />
+![settings](.\image\settings.png)
 
 * **日常计时器：** 可以选择性开启计时功能，完成后自动结算耗时，看看今天是不是比昨天“凹”得更快！
 
-<img width="326" height="200" alt="image" src="https://github.com/user-attachments/assets/59a606c6-2754-428c-ad65-9fbd7f391e62" />
+![timing_1](.\image\timing_1.png)
 
-<img width="326" height="200" alt="image" src="https://github.com/user-attachments/assets/6f509750-2f51-41e5-abd6-c7dabd53c908" />
+![timing_2](.\image\timing_2.png)
 
 * **绿色免安装：** 纯粹的本地单文件工具，不写注册表，随用随开，删文件夹即彻底卸载。
 
