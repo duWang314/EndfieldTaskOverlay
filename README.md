@@ -15,15 +15,18 @@
 
 * **定制鼠标与窗口半透明：** 窗口采用终末地样式的定制鼠标，增加沉浸感；且默认鼠标不移入时保持一定的透明度，透明度可在配置文件中自行调整。
 
-  ![cursor and transparency](C:\Users\Administrator\Desktop\cursor and transparency.gif)
+![cursor and transparency](https://github.com/user-attachments/assets/9945dfbf-eaed-4189-9e56-1556ab1451bd)
+
 * **极简悬浮，随心拖拽：** 无边框设计，支持在任意位置拖动窗口，支持在右下角调整窗口大小。绝不遮挡游戏关键视野。窗口的大小和位置将在每次 拖拽 / 缩放 后自动保存。
 
-  ![drag](C:\Users\Administrator\Desktop\drag.gif)
+![drag](https://github.com/user-attachments/assets/e369e939-fc67-4474-af85-116fd09fef56)
 
-  ![zoom](C:\Users\Administrator\Desktop\zoom.gif)
+![zoom](https://github.com/user-attachments/assets/af5c5c8e-35e8-475f-8d48-ccc646a1fab2)
+
 * **自动聚焦游戏：** 鼠标指针移出后自动聚焦到游戏（锁定进程：Endfield.exe），无需再在游戏中点击，增加沉浸感。
 
-  ![auto focus](C:\Users\Administrator\Desktop\auto focus.gif)
+![zoom](https://github.com/user-attachments/assets/da3d2922-deba-4a22-8487-a4e5fe6c2972)
+
 * **灵活定制任务：** 纯文本 `TODO.txt` 驱动，人人皆可轻松编辑，定制专属的日常清本路线。
 * **一键启动游戏：** 绑定游戏路径，并在设置中勾选“自动启动游戏”后，打开小窗即刻自动拉起游戏，快人一步。
 
@@ -107,3 +110,8 @@
 
 **Q3: 勾选“自动启动游戏”后可能存在的卡在加载界面或游戏版本无法更新的问题？**
 本软件采用的启动原理是直接找到游戏本体的可执行文件启动。如果卡在加载界面，请尝试使用鹰角启动器启动；如果需要进行游戏大版本更新（如 `v1.0 零号委托` 到 `v1.1 新潮起，故渊离`），请务必到鹰角启动器中进行更新。
+
+**Q4: 在配置文件 `settings.json` 中修改配置按下确定后却与修改不符的问题？**
+<img width="535" height="171" alt="settings priority" src="https://github.com/user-attachments/assets/f2730da4-dfef-42ec-8f84-8f2bdc7b87cd" />
+
+当在设置子窗口按下“确定”按钮时，设置窗口中有的项目将优先遵循设置窗口（置顶、自启动、路径、位置)；仅设置窗口中不存在的项目将遵循配置文件（缩放、透明度)。简单来说就是——设置窗口优先。
