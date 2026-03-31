@@ -54,20 +54,20 @@
                 <TextBlock Grid.Row="2" Grid.Column="0" Text="游戏路径" VerticalAlignment="Center" Margin="0,0,8,6" />
                 <TextBox x:Name="GamePathTextBox" Grid.Row="2" Grid.Column="1" Margin="0,0,0,6" />
 
-                <TextBlock Grid.Row="3" Grid.Column="0" Text="窗口坐标" VerticalAlignment="Center" Margin="0,0,8,0" Visibility="Hidden" />
+                <TextBlock Grid.Row="3" Grid.Column="0" Text="窗口坐标" VerticalAlignment="Center" Margin="0,0,8,0" />
                 <StackPanel Grid.Row="3" Grid.Column="1" Orientation="Horizontal">
                     <TextBox x:Name="LocationXTextBox"
                              Width="70"
                              Margin="0,0,6,0"
                              PreviewTextInput="NumericTextBox_PreviewTextInput"
                              DataObject.Pasting="NumericTextBox_Pasting"
-                             Visibility="Hidden" />
-                    <TextBlock Text="," VerticalAlignment="Center" Margin="0,0,6,0" Visibility="Hidden" />
+                              />
+                    <TextBlock Text="," VerticalAlignment="Center" Margin="0,0,6,0" />
                     <TextBox x:Name="LocationYTextBox"
                              Width="70"
                              PreviewTextInput="NumericTextBox_PreviewTextInput"
                              DataObject.Pasting="NumericTextBox_Pasting"
-                             Visibility="Hidden"/>
+                              />
                 </StackPanel>
             </Grid>
 
