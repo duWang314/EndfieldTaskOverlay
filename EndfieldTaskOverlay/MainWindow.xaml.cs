@@ -21,7 +21,7 @@ namespace EndfieldTaskOverlay
     {
         private readonly string _settingsPath = Path.Combine(AppContext.BaseDirectory, "settings.json");
         private readonly string _todoPath = Path.Combine(AppContext.BaseDirectory, "TODO.txt");
-        private readonly string _readmePath = Path.Combine(AppContext.BaseDirectory, "README.pdf");
+        private readonly string _readmePath = Path.Combine(AppContext.BaseDirectory, "README.html");
         private OverlaySettings _settings = new();
         private readonly List<string> _tasks = new();
         private readonly DispatcherTimer _taskDurationTimer = new() { Interval = TimeSpan.FromSeconds(1) };
