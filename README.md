@@ -25,7 +25,7 @@
 
 * **自动聚焦游戏：** 鼠标指针移出后自动聚焦到游戏（锁定进程：Endfield.exe），无需再在游戏中点击，增加沉浸感。
 
-![zoom](https://github.com/user-attachments/assets/da3d2922-deba-4a22-8487-a4e5fe6c2972)
+![auto focus](https://github.com/user-attachments/assets/02a7a4a3-7a98-4856-876b-26f999d1fb08)
 
 * **灵活定制任务：** 纯文本 `TODO.txt` 驱动，人人皆可轻松编辑，定制专属的日常清本路线。
 * **一键启动游戏：** 绑定游戏路径，并在设置中勾选“自动启动游戏”后，打开小窗即刻自动拉起游戏，快人一步。
