@@ -2,7 +2,7 @@
 
 **版本:** v0.1.2
 
-**运行依赖:** windowsdesktop runtime ≥ 10
+**运行依赖:** windowsdesktop runtime ≥ 10 [10.0.5 的直接链接](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/10.0.5/windowsdesktop-runtime-10.0.5-win-x64.exe)
 
 **作者:** duWang
 
