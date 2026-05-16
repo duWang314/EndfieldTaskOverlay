@@ -1,7 +1,11 @@
 # 终常小窗 (Endfield Task Overlay) 
 
 **版本:** v0.1.2
+
+**运行依赖:** windowsdesktop runtime ≥ 10 [10.0.5 的直接链接](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/10.0.5/windowsdesktop-runtime-10.0.5-win-x64.exe)
+
 **作者:** duWang
+
 **适用游戏:** 《明日方舟：终末地》 (Arknights: Endfield)，当然别的任务也可以
 
 ## 📌 简介

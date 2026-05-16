@@ -1,7 +1,11 @@
 # 终常小窗 (Endfield Task Overlay) 
 
 **版本:** v0.1.3
+
+**运行依赖:** windowsdesktop runtime ≥ 10 [10.0.5 的直接链接](https://builds.dotnet.microsoft.com/dotnet/WindowsDesktop/10.0.5/windowsdesktop-runtime-10.0.5-win-x64.exe)
+
 **作者:** duWang
+
 **适用游戏:** 《明日方舟：终末地》 (Arknights: Endfield)，当然别的任务也可以
 
 ## 📌 简介
@@ -25,7 +29,7 @@
 
 * **自动聚焦游戏：** 鼠标指针移出后自动聚焦到游戏（锁定进程：Endfield.exe），无需再在游戏中点击，增加沉浸感。
 
-![auto focus](https://github.com/user-attachments/assets/02a7a4a3-7a98-4856-876b-26f999d1fb08)
+![auto focus](https://github-production-user-asset-6210df.s3.amazonaws.com/192951584/571722334-02a7a4a3-7a98-4856-876b-26f999d1fb08.gif?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIAVCODYLSA53PQK4ZA%2F20260401%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20260401T104824Z&X-Amz-Expires=300&X-Amz-Signature=00569c3b5e06ef822d51b767da5248198fb0b34874a36af833e37d48f930ad35&X-Amz-SignedHeaders=host)
 
 * **灵活定制任务：** 纯文本 `TODO.txt` 驱动，人人皆可轻松编辑，定制专属的日常清本路线。
 * **一键启动游戏：** 绑定游戏路径，并在设置中勾选“自动启动游戏”后，打开小窗即刻自动拉起游戏，快人一步。
