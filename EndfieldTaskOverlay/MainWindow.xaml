@@ -73,6 +73,14 @@
                         Height="24"
                         Background="#f0edec"
                         Click="PreviousButton_Click" />
+                <Button x:Name="AutoPressEButton"
+                        Content="自动按 E"
+                        ToolTip="一秒一E，可用于滑索送货，或是挂淤积点自动触发回血类连携省药"
+                        HorizontalAlignment="Center"
+                        Width="60"
+                        Height="24"
+                        Background="#f0edec"
+                        Click="AutoPressEButton_Click" />
                 <Button x:Name="NextButton"
                         Content="下一步"
                         HorizontalAlignment="Right"

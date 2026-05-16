@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Media3D;
 using System.Windows.Threading;
+using System.Threading.Tasks;
 
 namespace EndfieldTaskOverlay
 {
@@ -307,6 +308,91 @@ namespace EndfieldTaskOverlay
 
             _currentTaskIndex--;
             UpdateTaskDisplay();
+        }
+
+        // --- 以下 Win32 API 声明放在 MainWindow 类内部 ---
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern uint MapVirtualKey(uint uCode, uint uMapType);
+        [DllImport("user32.dll", SetLastError = true)]
+        static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+
+        [DllImport("user32.dll")]
+        static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+
+        const uint WM_KEYDOWN = 0x0100;
+        const uint WM_KEYUP = 0x0101;
+        const int VK_E = 0x45; // 虚拟键码：E
+
+        // --- 状态标志 ---
+        private bool AutoPressE = false;
+
+        // --- 修改为 async 的点击事件 ---
+        private async void AutoPressEButton_Click(object sender, RoutedEventArgs e)
+        {
+            // 切换状态
+            AutoPressE = !AutoPressE;
+
+            if (AutoPressE)
+            {
+                AutoPressEButton.Content = "正在按 E";
+                // 可选：将按钮变黄以起警示作用
+                AutoPressEButton.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#fded00"));
+
+                // 启动异步按键循环，不会卡死 UI
+                await StartAutoPressLoop();
+            }
+            else
+            {
+                AutoPressEButton.Content = "自动按 E";
+                // 恢复原有颜色
+                AutoPressEButton.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f0edec"));
+            }
+        }
+
+        // --- 独立的异步循环逻辑 ---
+        private async Task StartAutoPressLoop()
+        {
+            // 这里的 "Endfield" 必须是游戏运行时的精确窗口标题。
+            // 如果游戏的中文名叫 "明日方舟：终末地"，这里可能需要替换。
+            IntPtr hWnd = FindWindow(null, "Endfield");
+
+            if (hWnd == IntPtr.Zero)
+            {
+                System.Windows.MessageBox.Show("未找到游戏窗口，请先启动游戏！", "提示");
+
+                // 重置按钮状态
+                AutoPressE = false;
+                AutoPressEButton.Content = "自动按 E";
+                AutoPressEButton.Background = new System.Windows.Media.SolidColorBrush(
+                    (System.Windows.Media.Color)System.Windows.Media.ColorConverter.ConvertFromString("#f0edec"));
+                return;
+            }
+
+            // 当 AutoPressE 为 true 时，保持循环
+            while (AutoPressE)
+            {
+                // 1. 获取 'E' 键的硬件扫描码 (0 表示映射为硬件扫描码)
+                uint scanCode = MapVirtualKey(VK_E, 0);
+
+                // 2. 组装 KeyDown 的 lParam (二进制位图)：
+                // 包含硬件扫描码 (左移16位) | 重复次数1
+                uint lParamDown = (scanCode << 16) | 0x00000001;
+
+                // 3. 组装 KeyUp 的 lParam：
+                // 包含扫描码 | 重复次数1 | 第30位置1(表示之前已按下) | 第31位置1(表示正在松开)
+                uint lParamUp = (1u << 31) | (1u << 30) | (scanCode << 16) | 0x00000001;
+
+                // 注意：unchecked 是为了防止 1u<<31 导致带符号整数溢出报错
+                PostMessage(hWnd, WM_KEYDOWN, (IntPtr)VK_E, (IntPtr)unchecked((int)lParamDown));
+
+                await Task.Delay(50); // 按下停留 50ms
+
+                PostMessage(hWnd, WM_KEYUP, (IntPtr)VK_E, (IntPtr)unchecked((int)lParamUp));
+
+                await Task.Delay(950);
+            }
         }
 
         private void NextButton_Click(object sender, RoutedEventArgs e)

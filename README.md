@@ -1,6 +1,6 @@
 # 终常小窗 (Endfield Task Overlay) 
 
-**版本:** v0.1.2
+**版本:** v0.1.3
 **作者:** duWang
 **适用游戏:** 《明日方舟：终末地》 (Arknights: Endfield)，当然别的任务也可以
 
