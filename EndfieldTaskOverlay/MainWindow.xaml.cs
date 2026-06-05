@@ -310,18 +310,68 @@ namespace EndfieldTaskOverlay
             UpdateTaskDisplay();
         }
 
-        // --- 以下 Win32 API 声明放在 MainWindow 类内部 ---
-        [DllImport("user32.dll", CharSet = CharSet.Auto)]
-        static extern uint MapVirtualKey(uint uCode, uint uMapType);
-        [DllImport("user32.dll", SetLastError = true)]
+        // --- Win32 API 及结构体声明 ---
+        [DllImport("user32.dll")]
+        static extern uint SendInput(uint nInputs, INPUT[] pInputs, int cbSize);
+
+        [DllImport("user32.dll")]
         static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
 
         [DllImport("user32.dll")]
-        static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
 
-        const uint WM_KEYDOWN = 0x0100;
-        const uint WM_KEYUP = 0x0101;
-        const int VK_E = 0x45; // 虚拟键码：E
+        [DllImport("user32.dll")]
+        static extern uint MapVirtualKey(uint uCode, uint uMapType);
+
+        const int INPUT_KEYBOARD = 1;
+        const uint KEYEVENTF_SCANCODE = 0x0008;
+        const uint KEYEVENTF_KEYUP = 0x0002;
+        const int VK_E = 0x45;
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct INPUT
+        {
+            public int type;
+            public InputUnion u;
+        }
+
+        [StructLayout(LayoutKind.Explicit)]
+        public struct InputUnion
+        {
+            [FieldOffset(0)] public MOUSEINPUT mi;
+            [FieldOffset(0)] public KEYBDINPUT ki;
+            [FieldOffset(0)] public HARDWAREINPUT hi;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct KEYBDINPUT
+        {
+            public ushort wVk;
+            public ushort wScan;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct MOUSEINPUT
+        {
+            public int dx;
+            public int dy;
+            public uint mouseData;
+            public uint dwFlags;
+            public uint time;
+            public IntPtr dwExtraInfo;
+        }
+
+        [StructLayout(LayoutKind.Sequential)]
+        public struct HARDWAREINPUT
+        {
+            public uint uMsg;
+            public ushort wParamL;
+            public ushort wParamH;
+        }
 
         // --- 状态标志 ---
         private bool AutoPressE = false;
@@ -354,15 +404,11 @@ namespace EndfieldTaskOverlay
         // --- 独立的异步循环逻辑 ---
         private async Task StartAutoPressLoop()
         {
-            // 这里的 "Endfield" 必须是游戏运行时的精确窗口标题。
-            // 如果游戏的中文名叫 "明日方舟：终末地"，这里可能需要替换。
             IntPtr hWnd = FindWindow(null, "Endfield");
 
             if (hWnd == IntPtr.Zero)
             {
-                System.Windows.MessageBox.Show("未找到游戏窗口，请先启动游戏！", "提示");
-
-                // 重置按钮状态
+                MessageBox.Show("未找到游戏窗口，请先启动游戏！", "提示");
                 AutoPressE = false;
                 AutoPressEButton.Content = "自动按 E";
                 AutoPressEButton.Background = new System.Windows.Media.SolidColorBrush(
@@ -370,26 +416,33 @@ namespace EndfieldTaskOverlay
                 return;
             }
 
-            // 当 AutoPressE 为 true 时，保持循环
+            // 获取硬件扫描码
+            ushort scanCode = (ushort)MapVirtualKey(VK_E, 0);
+
             while (AutoPressE)
             {
-                // 1. 获取 'E' 键的硬件扫描码 (0 表示映射为硬件扫描码)
-                uint scanCode = MapVirtualKey(VK_E, 0);
+                // 关键改动：强制将游戏窗口拉回前台，否则 SendInput 会按在别的软件上
+                SetForegroundWindow(hWnd);
 
-                // 2. 组装 KeyDown 的 lParam (二进制位图)：
-                // 包含硬件扫描码 (左移16位) | 重复次数1
-                uint lParamDown = (scanCode << 16) | 0x00000001;
+                // 稍微等待一下，确保窗口已经完全获得焦点
+                await Task.Delay(50);
 
-                // 3. 组装 KeyUp 的 lParam：
-                // 包含扫描码 | 重复次数1 | 第30位置1(表示之前已按下) | 第31位置1(表示正在松开)
-                uint lParamUp = (1u << 31) | (1u << 30) | (scanCode << 16) | 0x00000001;
+                // 构造按下事件
+                INPUT[] inputs = new INPUT[1];
+                inputs[0].type = INPUT_KEYBOARD;
+                inputs[0].u.ki.wScan = scanCode;
+                inputs[0].u.ki.dwFlags = KEYEVENTF_SCANCODE; // 告诉系统我们使用的是硬件扫描码
 
-                // 注意：unchecked 是为了防止 1u<<31 导致带符号整数溢出报错
-                PostMessage(hWnd, WM_KEYDOWN, (IntPtr)VK_E, (IntPtr)unchecked((int)lParamDown));
+                // 执行按下
+                SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
 
                 await Task.Delay(50); // 按下停留 50ms
 
-                PostMessage(hWnd, WM_KEYUP, (IntPtr)VK_E, (IntPtr)unchecked((int)lParamUp));
+                // 构造松开事件
+                inputs[0].u.ki.dwFlags = KEYEVENTF_SCANCODE | KEYEVENTF_KEYUP;
+
+                // 执行松开
+                SendInput((uint)inputs.Length, inputs, Marshal.SizeOf(typeof(INPUT)));
 
                 await Task.Delay(950);
             }
@@ -558,10 +611,6 @@ namespace EndfieldTaskOverlay
                 SetForegroundWindow(processes[0].MainWindowHandle);
             }
         }
-
-        [DllImport("user32.dll")]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool SetForegroundWindow(IntPtr hWnd);
     }
 
     public class OverlaySettings
